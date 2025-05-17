@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        .Calculator{
+        width: 30%;
+        height: 800px;
+        border: 1px solid black;
+        text-align: center;
+        font-size: 20px;
+        margin-left: 450px;
+        background-color: rgb(63, 75, 75);
+        color: white;
+        }
+
+        .display{
+            width: 98%;
+            height: 50px;
+            text-align: right;
+            font-size: 32px;
+        }
+
+        .buttons{
+            display:grid;
+            grid-template-columns: repeat(4,1fr);
+            gap: 10px;
+        }
+
+        .button{
+            background-color: grey;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="Calculator"><h1>Calculator</h1>
+        <input class="display" id="display">
+        <div class="buttons">
+            <button class="button" onclick="appedValue(7)">7</button>
+            <button class="button" onclick="appedValue(8)">8</button>
+            <button class="button" onclick="appedValue(9)">9</button>
+            <button class="button" onclick="appedValue('/')">/</button>
+            
+            <button class="button" onclick="appedValue(4)">4</button>
+            <button class="button" onclick="appedValue(5)">5</button>
+            <button class="button" onclick="appedValue(6)">6</button>
+            <button class="button" onclick="appedValue('*')">*</button>
+
+            <button class="button" onclick="appedValue(1)">1</button>
+            <button class="button" onclick="appedValue(2)">2</button>
+            <button class="button" onclick="appedValue(3)">3</button>
+            <button class="button" onclick="appedValue('-')">-</button>
+
+            <button class="button" onclick="appedValue(0)">0</button>
+            <button class="button" onclick="appedValue('.')">.</button>
+            <button class="button" onclick="clearValue()">C</button>
+            <button class="button" onclick="appedValue('+')">+</button>
+
+            <button class="button" style="grid-column: span 4;" onclick="calCulate()">=</button>
+        </div>
+
+        <div class="profit-loss-section">
+            <h2>Profit/Loss Calculator</h2>
+            <input type="number" id="costPrice" class="input-box" placeholder="Enter Cost Price">
+            <input type="number" id="sellingPrice" class="input-box" placeholder="Enter Selling Price">
+            <br><br>
+            <button class="button profit-button" onclick="profitOrLoss()">Calculate Profit/Loss</button>
+        </div>
+    </div>
+
+    <script>
+        let display=document.getElementById("display");
+
+        function appedValue(value){
+            display.value+=value;
+        }
+
+        function clearValue(){
+            display.value='';
+        }
+
+        function calCulate(){
+            display.value=eval(display.value);
+        }
+        
+        function profitOrLoss() {
+            let cp = parseFloat(document.getElementById("costPrice").value);
+            let sp = parseFloat(document.getElementById("sellingPrice").value);
+
+            if (isNaN(cp) || isNaN(sp) || cp <= 0) {
+                display.value = "Invalid Input";
+                return;
+            }
+
+            let profitLoss = sp - cp;
+            let percentage = ((Math.abs(profitLoss) / cp) * 100).toFixed(2);
+
+            if (profitLoss > 0) {
+                display.value = `Profit: ₹${profitLoss} (${percentage}%)`;
+            } else if (profitLoss < 0) {
+                display.value = `Loss: ₹${Math.abs(profitLoss)} (${percentage}%)`;
+            } else {
+                display.value = "No Profit, No Loss";
+            }
+        }
+    </script>
+</body>
+</html>
